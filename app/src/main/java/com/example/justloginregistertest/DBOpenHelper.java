@@ -83,17 +83,17 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public void delete(String... args) {
         if (args[0] == "user") {
-            db.execSQL("SElECT FROM user WHERE name = AND password =" + args[1] + args[2]);
+            db.execSQL("SElECT FROM user WHERE name = AND password =" + args[0] + args[1]);
         } else if (args[0] == "food") {
-            db.execSQL("SElECT FROM food WHERE foodname =" + args[1]);
+            db.execSQL("SElECT FROM food WHERE foodname =" + args[0]);
         }
     }
 
     public void show(String... args){
         if (args[0] == "user") {
-            db.execSQL("SELECT user,passward From user" + args[1] + args[2]);
+            db.execSQL("SELECT user,passward From user" + args[0] + args[1]);
         } else if (args[0] == "food") {
-            db.execSQL("SELECT foodname,image,location,detail FROM food " + args[1] + args[2]+ args[3]+ args[4]);
+            db.execSQL("SELECT foodname,image,location,detail FROM food " + args[0] + args[1]+ args[2]+ args[3]);
         }
     }
 
