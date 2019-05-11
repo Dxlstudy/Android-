@@ -7,16 +7,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by littlecurl 2018/6/24
@@ -24,6 +19,8 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     private DBOpenHelper dbOpenHelper;
+    private List<Food> foods = new ArrayList<>();
+    private FoodAdpater adpter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,48 +28,57 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         dbOpenHelper = new DBOpenHelper(MainActivity.this, Constants.DB_NAME);
 
-//        final EditText etSearch=(EditText)findViewById(R.id.seachtext);
-//        ImageButton btnSearch=(ImageButton)findViewById(R.id.search);
-//        btnSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                 String key=etSearch.getText().toString();
-//                Cursor cursor=dbOpenHelper.getReadableDatabase().query("food" ,null,"foodname=?",new  String[]{key},null,null,null);
-//
-//            }
-//        });
         /**
          * 一定 一定 一定记得加这句，而且是固定位置，在setContentView()之下
          * 否则无论写的什么逻辑  都不会在Activity中起作用
          */
         ButterKnife.bind(this);
-        int[] imageid = new int[]{R.drawable.lvdagun, R.drawable.ic_launcher_background};
-        String[] title = new String[]{"123", "223"};
-        String[] weizhi = new String[]{"1234", "2234"};
-        String[] jiage = new String[]{"$123", "$123"};
-        List<Map<String, Object>> listitem = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < imageid.length; i++) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("image", imageid[i]);
-            map.put("title", title[i]);
-            map.put("location", weizhi[i]);
-            map.put("jiage", jiage[i]);
-            listitem.add(map);
-        }
-        SimpleAdapter adpter = new SimpleAdapter(this, listitem, R.layout.tupianmingcheng,
-                new String[]{"title", "image", "location", "jiage"},
-                new int[]{R.id.title, R.id.image, R.id.weizhi, R.id.jiage});
+        adpter = new FoodAdpater(this, foods);
         ListView listView = findViewById(R.id.listview);
         listView.setAdapter(adpter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> map = (Map<String, Object>) parent.getItemAtPosition(position);
                 Intent intent = new Intent(MainActivity.this, DetilActivity.class);
                 startActivity(intent);
-
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!foods.isEmpty()) {
+            foods.clear();
+        }
+        int[] imageid = new int[]{R.drawable.lvdagun, R.drawable.ic_launcher_background};
+        String[] title = new String[]{"123", "223"};
+        String[] weizhi = new String[]{"1234", "2234"};
+        String[] jiage = new String[]{"$123", "$123"};
+        Food food;
+        for (int i = 0; i < imageid.length; i++) {
+            food = new Food(title[i],
+                    "http://img.jituwang.com/uploads/allimg/140425/259439-14042514195949.jpg", jiage[i], weizhi[i]);
+            foods.add(food);
+        }
+        if (dbOpenHelper != null) {
+            try {
+                ArrayList<Food> allFoodData = dbOpenHelper.getAllFoodData();
+                if (allFoodData != null && !allFoodData.isEmpty()) {
+                    foods.addAll(allFoodData);
+                }
+            } catch (Exception e) {
+            }
+        }
+        if (adpter != null) {
+            adpter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     public void myClick(View view) {

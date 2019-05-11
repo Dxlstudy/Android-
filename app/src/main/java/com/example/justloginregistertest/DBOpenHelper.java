@@ -146,7 +146,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public ArrayList<Food> getAllFoodData() {
         ArrayList<Food> list = new ArrayList<Food>();
-        Cursor cursor = db.query("food", null, null, null, null, null, "name DESC");
+        Cursor cursor = db.query("food", null, null, null, null, null, "foodname");
         while (cursor.moveToNext()) {
             String foodname = cursor.getString(cursor.getColumnIndex("foodname"));
             String image = cursor.getString(cursor.getColumnIndex("image"));
