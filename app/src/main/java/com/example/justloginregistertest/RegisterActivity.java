@@ -28,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-        mDBOpenHelper = new DBOpenHelper(this,"db_test");
+        mDBOpenHelper = new DBOpenHelper(this,Constants.DB_NAME);
 
         //将验证码用图片的形式显示出来
 //        mIvRegisteractivityShowcode.setImageBitmap(Code.getInstance().createBitmap());

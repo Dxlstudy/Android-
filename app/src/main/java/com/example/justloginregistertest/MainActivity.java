@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dbOpenHelper = new DBOpenHelper(MainActivity.this, "food");
+        dbOpenHelper = new DBOpenHelper(MainActivity.this, Constants.DB_NAME);
 
 //        final EditText etSearch=(EditText)findViewById(R.id.seachtext);
 //        ImageButton btnSearch=(ImageButton)findViewById(R.id.search);

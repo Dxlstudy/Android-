@@ -50,7 +50,7 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        mDBOpenHelper = new DBOpenHelper(this,"db_test");
+        mDBOpenHelper = new DBOpenHelper(this,Constants.DB_NAME);
     }
     /**
      * onCreae()中大的布局已经摆放好了，接下来就该把layout里的东西

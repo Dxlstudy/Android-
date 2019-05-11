@@ -29,7 +29,7 @@ public class addActivity extends AppCompatActivity {
 //        setContentView(R.layout.add);
         setContentView(R.layout.add);
         ButterKnife.bind(this);
-        mDBOpenHelper = new DBOpenHelper(this, "db_test");
+        mDBOpenHelper = new DBOpenHelper(this, Constants.DB_NAME);
     }
 
     public void myClick(View view) {
