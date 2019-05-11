@@ -63,7 +63,7 @@ public class addActivity extends AppCompatActivity {
                 String image = mImage.getText().toString().trim();
                 String location = mCurrentLocation.getText().toString().trim();
                 if (!TextUtils.isEmpty(foodname) && !TextUtils.isEmpty(image) && !TextUtils.isEmpty(detail)) {
-                    mDBOpenHelper.add(foodname, detail, image, location);
+                    mDBOpenHelper.add("food", foodname, detail, image, location);
                     //添加判断
                     Toast.makeText(this, "添加成功!", Toast.LENGTH_SHORT).show();
                     mFoodName.setText("");

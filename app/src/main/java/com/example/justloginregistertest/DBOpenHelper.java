@@ -51,7 +51,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 "password TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS food(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "name TEXT," +
+                "foodname TEXT," +
                 "detail TEXT," +
                 "location TEXT," +
                 "image TEXT)");
@@ -74,26 +74,26 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     public void add(String... args) {
         if (args[0] == "user") {
-            db.execSQL("INSERT INTO user (name,password) VALUES(?,?)", new Object[]{args[0], args[1]});
+            db.execSQL("INSERT INTO user (name,password) VALUES(?,?)", new Object[]{args[1], args[2]});
         } else if (args[0] == "food") {
-            db.execSQL("INSERT INTO food (foodname,image,location,detail) VALUES(?,?,?,?)", new Object[]{ args[0],args[1], args[2], args[3]});
+            db.execSQL("INSERT INTO food (foodname,detail,image,location) VALUES(?,?,?,?)", new Object[]{ args[1],args[2], args[3], args[4]});
         }
     }
 
 
     public void delete(String... args) {
         if (args[0] == "user") {
-            db.execSQL("SElECT FROM user WHERE name = AND password =" + args[0] + args[1]);
+            db.execSQL("SElECT FROM user WHERE name = AND password =" + args[1] + args[2]);
         } else if (args[0] == "food") {
-            db.execSQL("SElECT FROM food WHERE foodname =" + args[0]);
+            db.execSQL("SElECT FROM food WHERE foodname =" + args[1]);
         }
     }
 
     public void show(String... args){
         if (args[0] == "user") {
-            db.execSQL("SELECT user,passward From user" + args[0] + args[1]);
+            db.execSQL("SELECT user,passward From user" + args[1] + args[2]);
         } else if (args[0] == "food") {
-            db.execSQL("SELECT foodname,image,location,detail FROM food " + args[0] + args[1]+ args[2]+ args[3]);
+            db.execSQL("SELECT foodname,image,location,detail FROM food " + args[1] + args[2]+ args[3]+ args[4]);
         }
     }
 
