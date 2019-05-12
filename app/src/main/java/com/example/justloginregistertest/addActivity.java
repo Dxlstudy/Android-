@@ -37,6 +37,13 @@ public class addActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(addActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
     @BindView(R.id.foodName)
     EditText mFoodName;
     @BindView(R.id.detail)

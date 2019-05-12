@@ -1,8 +1,6 @@
 package com.example.justloginregistertest;
 /**
- * 纯粹实现登录注册功能，其它功能都被注释掉了
- * 起作用的代码（连带着packag、import算上） 共 73 行
- * 不多吧？
+ * 纯粹实现登录注册功能，其它功能都被注释掉了 起作用的代码（连带着packag、import算上） 共 73 行 不多吧？
  */
 
 import android.content.Intent;
@@ -25,7 +23,8 @@ import butterknife.OnClick;
 /**
  * Created by littlecurl 2018/6/24
  */
-public class loginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
+
     /**
      * 声明自己写的 DBOpenHelper 对象
      *  DBOpenHelper(extends SQLiteOpenHelper) 主要用来
@@ -33,6 +32,7 @@ public class loginActivity extends AppCompatActivity {
      * 然后再进行数据表的增、删、改、查操作
      */
     private DBOpenHelper mDBOpenHelper;
+
     /**
      *创建 Activity 时先来重写 onCreate() 方法
      * 保存实例状态
@@ -50,8 +50,10 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        mDBOpenHelper = new DBOpenHelper(this,Constants.DB_NAME);
+        mDBOpenHelper = new DBOpenHelper(this, Constants.DB_NAME);
+        initAdmin();
     }
+
     /**
      * onCreae()中大的布局已经摆放好了，接下来就该把layout里的东西
      * 声明、实例化对象然后有行为的赋予其行为
@@ -106,6 +108,7 @@ public class loginActivity extends AppCompatActivity {
 //    TextView mTvLoginactivityCheck;
 //    @BindView(R.id.tv_loginactivity_else)
 //    TextView mBtLoginactivityElse;
+
     /**
      * 都声明并实例化之后
      * 需要为实例化的这些对象设置行为
@@ -174,21 +177,22 @@ public class loginActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password)) {
                     ArrayList<User> data = mDBOpenHelper.getAllData();
                     boolean match = false;
-                    for(int i=0;i<data.size();i++) {
+                    for (int i = 0; i < data.size(); i++) {
                         User user = data.get(i);
-                        if (name.equals(user.getName()) && password.equals(user.getPassword())){
+                        if (name.equals(user.getName()) && password.equals(user.getPassword())) {
                             match = true;
                             break;
-                        }else{
+                        } else {
                             match = false;
                         }
                     }
                     if (match) {
                         Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, MainActivity.class);
+                        intent.putExtra("name",name);
                         startActivity(intent);
                         finish();//销毁此Activity
-                    }else {
+                    } else {
                         Toast.makeText(this, "用户名或密码不正确，请重新输入", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -199,6 +203,13 @@ public class loginActivity extends AppCompatActivity {
             //TODO 第三方登录，时间有限，未实现
             //    break;
         }
+    }
+
+    /**
+     * 初始化一个admin账号
+     */
+    private void initAdmin() {
+        mDBOpenHelper.createAdmin("hello","123");
     }
 }
 

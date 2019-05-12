@@ -1,10 +1,12 @@
 package com.example.justloginregistertest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.example.justloginregistertest.FoodAdpater.IfoodDeleteListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     EditText searchTextEt;
     @BindView(R.id.search)
     ImageButton searchIB;
+    @BindView(R.id.add)
+    ImageButton addIb;
+    private boolean admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +47,15 @@ public class MainActivity extends AppCompatActivity {
          * 否则无论写的什么逻辑  都不会在Activity中起作用
          */
         ButterKnife.bind(this);
-        adpter = new FoodAdpater(this, foods);
+        String name = getIntent().getStringExtra("name");
+        admin = dbOpenHelper.isAdmin(name);
+        if (admin) {
+            addIb.setVisibility(View.VISIBLE);
+        } else {
+            addIb.setVisibility(View.GONE);
+        }
+        initData();
+        adpter = new FoodAdpater(this, foods, admin);
         ListView listView = findViewById(R.id.listview);
         listView.setAdapter(adpter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,11 +67,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        adpter.setOnFoodDeleteListener(new IfoodDeleteListener() {
+            @Override
+            public void delete(Food food) {
+                int deleteFood = dbOpenHelper.deleteFood(food);
+                if (deleteFood != 0) {
+                    initData();
+                } else {
+                    Toast.makeText(MainActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void initData() {
         if (!foods.isEmpty()) {
             foods.clear();
         }
@@ -85,11 +108,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     public void myClick(View view) {
         Intent intent = new Intent(MainActivity.this, addActivity.class);
@@ -106,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.search:
+                searchTextEt.clearFocus();
+                hideKeyboard(searchTextEt);
                 Editable searchTextEtText = searchTextEt.getText();
                 if (searchTextEtText != null && searchTextEtText.length() > 0) {
                     String foodKey = searchTextEtText.toString();
@@ -122,12 +142,17 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.logout:
-                Intent intent = new Intent(this, loginActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
                 break;
             default:
                 break;
         }
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

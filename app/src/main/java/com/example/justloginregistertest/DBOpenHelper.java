@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by littlecurl 2018/6/24
@@ -25,7 +26,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public String databaseName;
 
     public DBOpenHelper(Context context, String databaseName) {
-        super(context, databaseName, null, 1);
+        super(context, databaseName, null, 2);
         this.databaseName = databaseName;
         db = getReadableDatabase();
     }
@@ -41,6 +42,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name TEXT," +
                 "password TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS admin(" +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "name TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS food(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "foodname TEXT," +
@@ -53,7 +57,51 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS user");
         db.execSQL("DROP TABLE IF EXISTS food");
+        db.execSQL("DROP TABLE IF EXISTS admin");
         onCreate(db);
+    }
+
+    /**
+     * 创建一个admin
+     * @param name
+     * @param pwd
+     */
+    public void createAdmin(String name, String pwd) {
+        List<String> admins = new ArrayList<>();
+        Cursor cursor = db.query("admin", null, "name =?", new String[]{name}, null, null, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String adminName = cursor.getString(cursor.getColumnIndex("name"));
+                admins.add(adminName);
+            }
+        }
+        if (admins.isEmpty()) {
+            db.execSQL("INSERT INTO admin (name) VALUES(?)", new Object[]{name});
+            db.execSQL("INSERT INTO user (name,password) VALUES(?,?)", new Object[]{name, pwd});
+        }
+    }
+
+    /**
+     * 判断是否是 admin
+     * @param name
+     * @return
+     */
+    public boolean isAdmin(String name) {
+        boolean isAdmin;
+        List<String> admins = new ArrayList<>();
+        Cursor cursor = db.query("admin", null, "name =?", new String[]{name}, null, null, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String adminName = cursor.getString(cursor.getColumnIndex("name"));
+                admins.add(adminName);
+            }
+        }
+        if (admins.isEmpty()) {
+            isAdmin = false;
+        } else {
+            isAdmin = true;
+        }
+        return isAdmin;
     }
 
     /**
@@ -75,6 +123,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         } else if (args[0] == "food") {
             db.execSQL("SElECT FROM food WHERE foodname =" + args[1]);
         }
+    }
+
+    public int deleteFood(Food food){
+      return db.delete("food", "foodname=?", new String[]{food.getName()});
+
     }
 
     public void show(String... args) {
@@ -110,7 +163,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public ArrayList<Food> searchFoodData(String keyword) {
         ArrayList<Food> list = new ArrayList<Food>();
         Cursor cursor;
-        cursor = db.query("food", null, "foodname LIKE ?", new String[]{"%"+keyword+"%"}, null, null, "foodname");
+        cursor = db.query("food", null, "foodname LIKE ?", new String[]{"%" + keyword + "%"}, null, null, "foodname");
         while (cursor.moveToNext()) {
             String foodname = cursor.getString(cursor.getColumnIndex("foodname"));
             String image = cursor.getString(cursor.getColumnIndex("image"));

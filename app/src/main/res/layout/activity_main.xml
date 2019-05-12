@@ -1,63 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:focusable="true"
+  android:focusableInTouchMode="true"
+  android:orientation="horizontal"
+  tools:context=".MainActivity">
+
+  <RelativeLayout
+    android:id="@+id/top"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="horizontal">
+    android:layout_height="70dp"
+    android:background="@color/color_minefragment_top">
+    <ImageButton
+      android:id="@+id/search"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="18dp"
+      android:layout_marginLeft="6dp"
+      android:background="@drawable/ic_search" />
 
-    <RelativeLayout
-        android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/color_minefragment_top">
-        <ImageButton
-            android:id="@+id/search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_search"
-            android:layout_marginTop="18dp"
-            android:layout_marginLeft="6dp"
-            />
+    <EditText
+      android:id="@+id/seachtext"
+      android:layout_width="290dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="18dp"
+      android:layout_marginLeft="35dp"
+      android:hint="输入食品名称" />
 
-        <EditText
-            android:id="@+id/seachtext"
-            android:layout_width="290dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="18dp"
-            android:hint="输入食品名称"/>
+    <ImageButton
+      android:id="@+id/add"
+      android:visibility="gone"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:layout_marginLeft="31dp"
+      android:layout_toRightOf="@id/seachtext"
+      android:background="@drawable/live_button"
+      android:onClick="myClick" />
+  </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="31dp"
-            android:layout_toRightOf="@id/seachtext"
-            android:background="@drawable/live_button"
-            android:layout_marginTop="20dp"
-            android:onClick="myClick"/>
-    </RelativeLayout>
+  <ListView
+    android:id="@+id/listview"
+    android:layout_width="match_parent"
+    android:layout_height="569dp"
+    android:layout_marginTop="70dp">
 
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="569dp"
-        android:layout_marginTop="70dp">
-
-    </ListView>
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="退出登录"
-        android:textColor="@color/colorAccent"
-        android:layout_alignParentBottom="true"
-        />
-
-
-
+  </ListView>
+  <Button
+    android:id="@+id/logout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:text="退出登录"
+    android:textColor="@color/colorAccent" />
 
 
 </RelativeLayout>

@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_registeractivity_back: //返回登录页面
-                Intent intent1 = new Intent(this, loginActivity.class);
+                Intent intent1 = new Intent(this, LoginActivity.class);
                 startActivity(intent1);
                 finish();
                 break;
@@ -83,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password) ) {
                         //将用户名和密码加入到数据库中
                         mDBOpenHelper.add("user",username, password);
-                        Intent intent2 = new Intent(this, loginActivity.class);
+                        Intent intent2 = new Intent(this, LoginActivity.class);
                         startActivity(intent2);
                         finish();
                         Toast.makeText(this,  "验证通过，注册成功", Toast.LENGTH_SHORT).show();
