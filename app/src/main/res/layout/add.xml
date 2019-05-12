@@ -1,85 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".addActivity">
+
+  <Button
+    android:id="@+id/fanhuizhuye"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".addActivity">
-    <TextView
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:layout_alignParentBottom="true"
+    android:background="#009688"
+    android:onClick="myClick"
+    android:text="返回主页" />
+
+  <ScrollView
+    android:layout_above="@+id/fanhuizhuye"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+      <TextView
         android:id="@+id/zengjia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="140dp"
         android:text="增加食品"
-        android:textSize="30dp"
-        android:layout_marginLeft="140dp"/>
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/zengjia"-->
-        <!--android:text="名称:"-->
-        <!--android:textSize="20dp"-->
-        <!--android:id="@+id/mingcheng"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginTop="8dp"/>-->
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/mingcheng"-->
-        <!--android:text="位置"-->
-        <!--android:layout_above="@id/xiangxijieshao"-->
-        <!--android:textSize="30dp"/>-->
-    <EditText
+        android:textSize="30dp" />
+      <!--<TextView-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_below="@id/zengjia"-->
+      <!--android:text="名称:"-->
+      <!--android:textSize="20dp"-->
+      <!--android:id="@+id/mingcheng"-->
+      <!--android:layout_marginLeft="10dp"-->
+      <!--android:layout_marginTop="8dp"/>-->
+      <!--<TextView-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_below="@id/mingcheng"-->
+      <!--android:text="位置"-->
+      <!--android:layout_above="@id/xiangxijieshao"-->
+      <!--android:textSize="30dp"/>-->
+      <EditText
+        android:id="@+id/foodName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/zengjia"
-        android:hint="输入菜名"
-        android:id="@+id/foodName" />
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="详细介绍:"-->
-        <!--android:layout_below="@id/mingcheng"-->
-        <!--android:textSize="20dp"-->
-        <!--android:id="@+id/xiangxijieshao"-->
-        <!--android:layout_marginLeft="10dp"/>-->
-    <EditText
+        android:hint="输入菜名" />
+      <!--<TextView-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:text="详细介绍:"-->
+      <!--android:layout_below="@id/mingcheng"-->
+      <!--android:textSize="20dp"-->
+      <!--android:id="@+id/xiangxijieshao"-->
+      <!--android:layout_marginLeft="10dp"/>-->
+      <EditText
+        android:id="@+id/detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/foodName"
-        android:hint="输入详细介绍"
         android:paddingTop="20dp"
-        android:id="@+id/detail"/>
-   <EditText
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_below="@id/detail"
-       android:hint="插入图片地址"
-       android:id="@+id/selectImage"/>
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/selectImage"-->
-        <!--android:text="位置:"-->
-        <!--android:textSize="20dp"/>-->
-    <EditText
+        android:hint="输入详细介绍" />
+      <EditText
+        android:id="@+id/selectImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail"
+        android:hint="插入图片地址" />
+      <!--<TextView-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_below="@id/selectImage"-->
+      <!--android:text="位置:"-->
+      <!--android:textSize="20dp"/>-->
+      <EditText
+        android:id="@+id/currentLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/selectImage"
         android:paddingTop="20dp"
-        android:hint="输入地理位置"
-        android:id="@+id/currentLocation"/>
-    <Button
+        android:hint="输入地理位置" />
+      <Button
+        android:id="@+id/insert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="完成添加"
         android:layout_below="@id/currentLocation"
-        android:id="@+id/insert" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="返回主页"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/fanhuizhuye"
-        android:background="#009688"
-        android:onClick="myClick"/>
+        android:text="完成添加" />
+
+
+    </RelativeLayout>
+
+  </ScrollView>
 </RelativeLayout>
