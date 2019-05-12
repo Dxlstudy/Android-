@@ -84,16 +84,6 @@ public class MainActivity extends AppCompatActivity {
         if (!foods.isEmpty()) {
             foods.clear();
         }
-        int[] imageid = new int[]{R.drawable.lvdagun, R.drawable.ic_launcher_background};
-        String[] title = new String[]{"123", "223"};
-        String[] weizhi = new String[]{"1234", "2234"};
-        String[] jiage = new String[]{"$123", "$123"};
-        Food food;
-        for (int i = 0; i < imageid.length; i++) {
-            food = new Food(title[i],
-                    "http://img.jituwang.com/uploads/allimg/140425/259439-14042514195949.jpg", jiage[i], weizhi[i]);
-            foods.add(food);
-        }
         if (dbOpenHelper != null) {
             try {
                 ArrayList<Food> allFoodData = dbOpenHelper.getAllFoodData();

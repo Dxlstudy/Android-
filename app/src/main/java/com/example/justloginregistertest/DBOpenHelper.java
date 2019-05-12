@@ -63,8 +63,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     /**
      * 创建一个admin
-     * @param name
-     * @param pwd
      */
     public void createAdmin(String name, String pwd) {
         List<String> admins = new ArrayList<>();
@@ -81,10 +79,16 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void initFoodData(List<Food> foods) {
+        for (int i = 0; i < foods.size(); i++) {
+            Food food = foods.get(i);
+            db.execSQL("INSERT INTO food (foodname,detail,image,location) VALUES(?,?,?,?)",
+                    new Object[]{food.getName(), food.getDetail(), food.getImage(), food.getLocation()});
+        }
+    }
+
     /**
      * 判断是否是 admin
-     * @param name
-     * @return
      */
     public boolean isAdmin(String name) {
         boolean isAdmin;
@@ -125,8 +129,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    public int deleteFood(Food food){
-      return db.delete("food", "foodname=?", new String[]{food.getName()});
+    public int deleteFood(Food food) {
+        return db.delete("food", "foodname=?", new String[]{food.getName()});
 
     }
 
@@ -169,7 +173,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             String image = cursor.getString(cursor.getColumnIndex("image"));
             String detail = cursor.getString(cursor.getColumnIndex("detail"));
             String location = cursor.getString(cursor.getColumnIndex("location"));
-            list.add(new Food(foodname, detail, image, location));
+            list.add(new Food(foodname, image, detail, location));
         }
         return list;
     }
@@ -182,7 +186,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             String image = cursor.getString(cursor.getColumnIndex("image"));
             String detail = cursor.getString(cursor.getColumnIndex("detail"));
             String location = cursor.getString(cursor.getColumnIndex("location"));
-            list.add(new Food(foodname, detail, image, location));
+            list.add(new Food(foodname, image, detail, location));
         }
         return list;
     }
