@@ -1,9 +1,11 @@
 package com.example.justloginregistertest;
 
+import android.os.Parcel;
+
 /**
  * 用于保存食品信息
  */
-public class Food {
+public class Food implements android.os.Parcelable {
     private String foodname;            //食品名
     private String image;            //图片
     private String detail;            //详情
@@ -57,5 +59,37 @@ public class Food {
                 ", location='" + location + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.foodname);
+        dest.writeString(this.image);
+        dest.writeString(this.detail);
+        dest.writeString(this.location);
+    }
+
+    protected Food(Parcel in) {
+        this.foodname = in.readString();
+        this.image = in.readString();
+        this.detail = in.readString();
+        this.location = in.readString();
+    }
+
+    public static final Creator<Food> CREATOR = new Creator<Food>() {
+        @Override
+        public Food createFromParcel(Parcel source) {
+            return new Food(source);
+        }
+
+        @Override
+        public Food[] newArray(int size) {
+            return new Food[size];
+        }
+    };
 }
 

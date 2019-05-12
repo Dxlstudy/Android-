@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Food food = foods.get(position);
                 Intent intent = new Intent(MainActivity.this, DetilActivity.class);
+                intent.putExtra("food",food);
                 startActivity(intent);
             }
         });
