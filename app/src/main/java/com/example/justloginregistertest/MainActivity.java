@@ -3,10 +3,14 @@ package com.example.justloginregistertest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -21,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private DBOpenHelper dbOpenHelper;
     private List<Food> foods = new ArrayList<>();
     private FoodAdpater adpter;
+    @BindView(R.id.seachtext)
+    EditText searchTextEt;
+    @BindView(R.id.search)
+    ImageButton searchIB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Food food = foods.get(position);
                 Intent intent = new Intent(MainActivity.this, DetilActivity.class);
-                intent.putExtra("food",food);
+                intent.putExtra("food", food);
                 startActivity(intent);
             }
         });
@@ -93,14 +101,32 @@ public class MainActivity extends AppCompatActivity {
     Button mBtMainLogout;
 
     @OnClick({
-            R.id.logout
+            R.id.logout, R.id.search
     })
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.search:
+                Editable searchTextEtText = searchTextEt.getText();
+                if (searchTextEtText != null && searchTextEtText.length() > 0) {
+                    String foodKey = searchTextEtText.toString();
+                    ArrayList<Food> keyWordFoods = dbOpenHelper.searchFoodData(foodKey);
+                    if (keyWordFoods != null && !keyWordFoods.isEmpty()) {
+                        foods.clear();
+                        foods.addAll(keyWordFoods);
+                        adpter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(this, "食品名称输入错误", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "请输入食品名称", Toast.LENGTH_SHORT).show();
+                }
+                break;
             case R.id.logout:
                 Intent intent = new Intent(this, loginActivity.class);
                 startActivity(intent);
                 finish();
+                break;
+            default:
                 break;
         }
     }

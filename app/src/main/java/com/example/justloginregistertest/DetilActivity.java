@@ -32,7 +32,7 @@ public class DetilActivity extends AppCompatActivity {
         Food food = getIntent().getParcelableExtra("food");
         if (food != null) {
             Picasso.get().load(food.getImage())
-                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .placeholder(R.drawable.ic_launcher_background)
                     .into(iV);
             titleTv.setText(food.getName());
             contentTv.setText(food.getDetail());
