@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void myClick(View view) {
         Intent intent = new Intent(MainActivity.this, addActivity.class);
+        intent.putExtra("name",getIntent().getStringExtra("name"));
         startActivity(intent);
     }
 

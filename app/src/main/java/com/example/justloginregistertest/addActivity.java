@@ -34,6 +34,7 @@ public class addActivity extends AppCompatActivity {
 
     public void myClick(View view) {
         Intent intent = new Intent(addActivity.this, MainActivity.class);
+        intent.putExtra("name",getIntent().getStringExtra("name"));
         startActivity(intent);
     }
 
@@ -41,6 +42,7 @@ public class addActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(addActivity.this, MainActivity.class);
+        intent.putExtra("name",getIntent().getStringExtra("name"));
         startActivity(intent);
     }
 
