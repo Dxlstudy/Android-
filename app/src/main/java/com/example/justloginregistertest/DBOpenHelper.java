@@ -1,5 +1,6 @@
 package com.example.justloginregistertest;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -45,6 +46,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS admin(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS commons(" +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT" +
+                ",common TEXT" +
+                ",detailId TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS food(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "foodname TEXT," +
@@ -58,6 +63,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS user");
         db.execSQL("DROP TABLE IF EXISTS food");
         db.execSQL("DROP TABLE IF EXISTS admin");
+        db.execSQL("DROP TABLE IF EXISTS commons");
         onCreate(db);
     }
 
@@ -169,11 +175,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor;
         cursor = db.query("food", null, "foodname LIKE ?", new String[]{"%" + keyword + "%"}, null, null, "foodname");
         while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex("_id"));
             String foodname = cursor.getString(cursor.getColumnIndex("foodname"));
             String image = cursor.getString(cursor.getColumnIndex("image"));
             String detail = cursor.getString(cursor.getColumnIndex("detail"));
             String location = cursor.getString(cursor.getColumnIndex("location"));
-            list.add(new Food(foodname, image, detail, location));
+            list.add(new Food(id, foodname, image, detail, location));
         }
         return list;
     }
@@ -182,12 +189,40 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         ArrayList<Food> list = new ArrayList<Food>();
         Cursor cursor = db.query("food", null, null, null, null, null, "foodname");
         while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex("_id"));
             String foodname = cursor.getString(cursor.getColumnIndex("foodname"));
             String image = cursor.getString(cursor.getColumnIndex("image"));
             String detail = cursor.getString(cursor.getColumnIndex("detail"));
             String location = cursor.getString(cursor.getColumnIndex("location"));
-            list.add(new Food(foodname, image, detail, location));
+            list.add(new Food(id, foodname, image, detail, location));
         }
         return list;
+    }
+
+    /**
+     * 添加评论
+     */
+    public boolean addCommon(String common,String detailId) {
+        ContentValues values = new ContentValues();
+        values.put("common",common);
+        values.put("detailId",detailId);
+        long commons = db.insert("commons", null, values);
+        return commons!=-1;
+    }
+
+    /**
+     * 查询当前内容评论列表
+     */
+    public List<CommonBean> queryDetailCommons(String detailId) {
+        List<CommonBean> commonBeans = new ArrayList<>();
+        Cursor cursor = db.query("commons", null, "detailId=?", new String[]{detailId}, null, null, null, null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex("_id"));
+            String common = cursor.getString(cursor.getColumnIndex("common"));
+            String detailId1 = cursor.getString(cursor.getColumnIndex("detailId"));
+
+            commonBeans.add(new CommonBean(id, detailId1, common));
+        }
+        return commonBeans;
     }
 }

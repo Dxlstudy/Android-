@@ -6,6 +6,7 @@ import android.os.Parcel;
  * 用于保存食品信息
  */
 public class Food implements android.os.Parcelable {
+    private int id;
     private String foodname;            //食品名
     private String image;            //图片
     private String detail;            //详情
@@ -16,6 +17,22 @@ public class Food implements android.os.Parcelable {
         this.image = image;
         this.detail = detail;
         this.location = location;
+    }
+
+    public Food(int id, String name, String image, String detail, String location) {
+        this.id = id;
+        this.foodname = name;
+        this.image = image;
+        this.detail = detail;
+        this.location = location;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -60,6 +77,7 @@ public class Food implements android.os.Parcelable {
                 '}';
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -67,6 +85,7 @@ public class Food implements android.os.Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
         dest.writeString(this.foodname);
         dest.writeString(this.image);
         dest.writeString(this.detail);
@@ -74,6 +93,7 @@ public class Food implements android.os.Parcelable {
     }
 
     protected Food(Parcel in) {
+        this.id = in.readInt();
         this.foodname = in.readString();
         this.image = in.readString();
         this.detail = in.readString();
