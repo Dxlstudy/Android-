@@ -34,7 +34,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     /**
      * 重写两个必须要重写的方法，因为class DBOpenHelper extends SQLiteOpenHelper 而这两个方法是 abstract 类 SQLiteOpenHelper 中声明的 abstract 方法
-     * 所以必须在子类 DBOpenHelper 中重写 abstract 方法 想想也是，为啥规定这么死必须重写？ 因为，一个数据库表，首先是要被创建的，然后免不了是要进行增删改操作的
      * 所以就有onCreate()、onUpgrade()两个方法
      */
     @Override
@@ -136,7 +135,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     public int deleteFood(Food food) {
-        return db.delete("food", "foodname=?", new String[]{food.getName()});
+        return db.delete("food", "foodname=? and detail=? and location=?", new String[]{food.getName(),food.getDetail(),food.getLocation()});
 
     }
 

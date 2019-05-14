@@ -75,10 +75,10 @@ public class addActivity extends AppCompatActivity {
                     mDBOpenHelper.add("food", foodname, detail, image, location);
                     //添加判断
                     Toast.makeText(this, "添加成功!", Toast.LENGTH_SHORT).show();
-                    mFoodName.setText("");
-                    mDetail.setText("");
-                    mImage.setText("");
-                    mCurrentLocation.setText("");
+//                    mFoodName.setText("");
+//                    mDetail.setText("");
+//                    mImage.setText("");
+//                    mCurrentLocation.setText("");
                 }
         }
     }
