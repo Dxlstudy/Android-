@@ -16,6 +16,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +53,11 @@
 
     </LinearLayout>
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_layout"
+        >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -93,7 +98,7 @@
         <ListView
             android:id="@+id/detail_common_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             android:layout_below="@id/pinglun" />
 
 
@@ -111,4 +116,5 @@
 
 
     </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
