@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +77,7 @@ public class DetilActivity extends AppCompatActivity {
         queryCommons(id + "");
         mAdapter = new DetailCommonAdapter(this, beans);
         detaiCommonlist.setAdapter(mAdapter);
+        setListViewHeightBasedOnChildren(detaiCommonlist);
     }
 
     public void myClickBK(View view) {
@@ -110,6 +113,7 @@ public class DetilActivity extends AppCompatActivity {
                 queryCommons(id+"");
                 mAdapter.notifyDataSetChanged();
                 detaiCommonlist.setSelection(beans.size()-1);
+                setListViewHeightBasedOnChildren(detaiCommonlist);
             }else {
                 Toast.makeText(this, "发表评论失败", Toast.LENGTH_SHORT).show();
             }
@@ -128,6 +132,24 @@ public class DetilActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    private void setListViewHeightBasedOnChildren(ListView listView){
+        if(listView == null) return;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     public void hideKeyboard(View view) {

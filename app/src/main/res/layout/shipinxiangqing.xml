@@ -88,10 +88,10 @@
 
       <TextView
         android:id="@+id/pinglun"
-        android:paddingTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/jieshao"
+        android:paddingTop="30dp"
         android:text="评论:"
         android:textSize="20dp" />
 
@@ -107,7 +107,7 @@
       <ListView
         android:id="@+id/detail_common_list"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/pinglun" />
 
 
