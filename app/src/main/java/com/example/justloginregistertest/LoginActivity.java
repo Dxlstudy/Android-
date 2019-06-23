@@ -180,8 +180,8 @@ public class LoginActivity extends AppCompatActivity {
     private void initAdmin() {
         mDBOpenHelper.createAdmin("hello", "123");
     }
-
     private void initFoodData() {
+
         SharedPreferences sp = getSharedPreferences("app", MODE_PRIVATE);
         boolean aBoolean = sp.getBoolean("isFirst", true);
         if (aBoolean) {

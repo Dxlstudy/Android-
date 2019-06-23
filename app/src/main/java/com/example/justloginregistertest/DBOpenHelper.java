@@ -126,13 +126,13 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
 
-    public void delete(String... args) {
-        if (args[0] == "user") {
-            db.execSQL("SElECT FROM user WHERE name = AND password =" + args[1] + args[2]);
-        } else if (args[0] == "food") {
-            db.execSQL("SElECT FROM food WHERE foodname =" + args[1]);
-        }
-    }
+//    public void delete(String... args) {
+//        if (args[0] == "user") {
+//            db.execSQL("SElECT FROM user WHERE name = AND password =" + args[1] + args[2]);
+//        } else if (args[0] == "food") {
+//            db.execSQL("SElECT FROM food WHERE foodname =" + args[1]);
+//        }
+//    }
 
     public int deleteFood(Food food) {
         return db.delete("food", "foodname=? and detail=? and location=?", new String[]{food.getName(),food.getDetail(),food.getLocation()});

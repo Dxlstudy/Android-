@@ -141,6 +141,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+        intent.putExtra("name",getIntent().getStringExtra("name"));
+        startActivity(intent);
+    }
 
     public void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                realCode = Code.getInstance().getCode().toLowerCase();
 //                break;
             case R.id.bt_registeractivity_register:    //注册按钮
-                //获取用户输入的用户名、密码、验证码
+                //获取用户输入的用户名、密码
                 String username = mEtRegisteractivityUsername.getText().toString().trim();
                 String password = mEtRegisteractivityPassword2.getText().toString().trim();
                // String phoneCode = mEtRegisteractivityPhonecodes.getText().toString().toLowerCase();
